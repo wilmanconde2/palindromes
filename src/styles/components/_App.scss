@@ -1,0 +1,34 @@
+html {
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  background-color: rgba(128, 128, 128, 0.268);
+}
+
+h1 {
+  color: blue;
+  text-align: center;
+  margin: 2rem 0rem;
+  font-variant-caps: small-caps;
+  text-decoration: dotted;
+}
+
+p {
+  color: black;
+  text-align: center;
+  margin: 0;
+}
+
+#clear-btn,
+#text-input,
+#check-btn {
+  display: block;
+  justify-self: center;
+  margin: 1rem 0rem;
+}
+
+#result{
+    display: none;
+}
