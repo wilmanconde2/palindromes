@@ -29,6 +29,21 @@ p {
   margin: 1rem 0rem;
 }
 
-#result{
-    display: none;
+#text-input {
+  width: 300px;
+  border-radius: 15px;
+  padding: 5px;
+  border: 1px solid blue;
+  color: blue;
+  font-size: larger;
+  text-align: center;
+
+  &:focus {
+    outline: none;
+  }
+
+}
+
+#result {
+  display: none;
 }
