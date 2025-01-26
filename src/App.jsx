@@ -1,4 +1,3 @@
-import React from 'react';
 import Swal from 'sweetalert2';
 
 const App = () => {
@@ -8,43 +7,41 @@ const App = () => {
     document.getElementById('result').innerHTML = '';
   }
 
-  // Función que se ejecuta cuando el usuario hace clic en el botón "Check" y obtenemos el valor ingresado en el campo de texto
-
+  // Función que se ejecuta cuando el usuario hace clic en el botón "Check"
   function onClick() {
     const text = document.getElementById('text-input').value;
 
-    // Si el campo de texto está vacío, mostramos una alerta y detenemos la ejecución
-    if (text === '') {
+    // Validación: si está vacío, mostrar alerta y salir
+    if (text.trim() === '') {
       Swal.fire({
         title: 'Please input a value',
         icon: 'warning',
-        showCancelButton: false,
         confirmButtonText: 'Continuar',
       });
       return;
     }
 
-    // Eliminamos caracteres no alfanuméricos y convertimos string a mayúsculas)
-    let clearedText = text.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-    console.log(clearedText); // Mostramos el texto limpiado en la consola para depuración
+    // Eliminar caracteres no alfanuméricos y pasar a mayúsculas
+    const clearedText = text.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+    const isPalindrome = clearedText === clearedText.split('').reverse().join('');
 
-    // Verificamos si el texto limpiado es un palíndromo
-    let result = (document.getElementById('result').value =
-      clearedText === clearedText.split('').reverse().join(''));
-    console.log(result); // Mostramos el resultado (true o false) en la consola para depuración
+    // Mostrar resultado en SweetAlert
+    Swal.fire({
+      title: isPalindrome
+        ? `${clearedText} es un palíndromo </br> </br> ${clearedText} is a palindrome`
+        : `${clearedText} no es un palíndromo </br> </br> ${clearedText} is not a palindrome`,
+      icon: isPalindrome ? 'success' : 'error',
+      // html: true, // permite usar </br>
+      confirmButtonText: 'OK',
+    }).then(() => {
+      // Limpiar campos después de cerrar la alerta
+      document.getElementById('text-input').value = '';
+      document.getElementById('result').innerHTML = '';
+    });
 
-    // Mostramos el resultado en la interfaz de usuario
-    document.getElementById('result').innerHTML = result
-      ? Swal.fire({
-          title: `${clearedText} es un palíndromo </br> </br> ${clearedText} is a palindrome`,
-          icon: 'success',
-          draggable: true,
-        })
-      : Swal.fire({
-          title: `${clearedText} no es un palíndromo </br> </br> ${clearedText} is not a palindrome `,
-          icon: 'error',
-          draggable: true,
-        });
+    // También puedes mostrar en consola si lo necesitas
+    console.log(`Texto limpiado: ${clearedText}`);
+    console.log(`¿Es palíndromo?: ${isPalindrome}`);
   }
 
   return (
@@ -56,17 +53,17 @@ const App = () => {
       <p>Ingrese un texto para verificar si es un palíndromo.</p>
       <p>Enter a text to check if it is a palindrome.</p>
 
-      <div id='controls'>
+      <input id='text-input' />
+
+      <div className='controls'>
         <button id='clear-btn' onClick={clearText} className='btn btn-primary'>
           Clear
         </button>
-      </div>
-      <input id='text-input' />
-      <div>
         <button id='check-btn' onClick={onClick} className='btn btn-primary'>
           Check
         </button>
       </div>
+
       <div id='result'></div>
     </>
   );
