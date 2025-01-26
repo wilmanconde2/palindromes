@@ -1,10 +1,12 @@
 html {
   display: flex;
   justify-content: center;
+  text-align: center;
 }
 
 body {
   background-color: rgba(128, 128, 128, 0.268);
+  min-height: 500px;
 }
 
 h1 {
@@ -21,11 +23,9 @@ p {
   margin: 0;
 }
 
-#clear-btn,
-#text-input,
-#check-btn {
+#text-input {
   display: block;
-  justify-self: center;
+  justify-self: center !important;
   margin: 1rem 0rem;
 }
 
@@ -41,9 +41,14 @@ p {
   &:focus {
     outline: none;
   }
-
 }
 
 #result {
   display: none;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
