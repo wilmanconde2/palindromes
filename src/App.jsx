@@ -1,74 +1,87 @@
-import React from 'react';
+// src/App.jsx
+
+import { useState } from 'react';
 import Swal from 'sweetalert2';
 
+const normalizeText = (value) => value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+
 const App = () => {
-  // Función para limpiar el contenido del campo de texto y del resultado
-  function clearText() {
-    document.getElementById('text-input').value = '';
-    document.getElementById('result').innerHTML = '';
-  }
+  const [text, setText] = useState('');
 
-  // Función que se ejecuta cuando el usuario hace clic en el botón "Check" y obtenemos el valor ingresado en el campo de texto
+  const clearText = () => {
+    setText('');
+  };
 
-  function onClick() {
-    const text = document.getElementById('text-input').value;
+  const onClick = () => {
+    const trimmedText = text.trim();
 
-    // Si el campo de texto está vacío, mostramos una alerta y detenemos la ejecución
-    if (text === '') {
+    if (!trimmedText) {
       Swal.fire({
         title: 'Please input a value',
         icon: 'warning',
-        showCancelButton: false,
-        confirmButtonText: 'Continuar',
+        confirmButtonText: 'OK',
       });
       return;
     }
 
-    // Eliminamos caracteres no alfanuméricos y convertimos string a mayúsculas)
-    let clearedText = text.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-    console.log(clearedText); // Mostramos el texto limpiado en la consola para depuración
+    const clearedText = normalizeText(trimmedText);
+    const reversedText = clearedText.split('').reverse().join('');
+    const isPalindrome = clearedText === reversedText;
 
-    // Verificamos si el texto limpiado es un palíndromo
-    let result = (document.getElementById('result').value =
-      clearedText === clearedText.split('').reverse().join(''));
-    console.log(result); // Mostramos el resultado (true o false) en la consola para depuración
+    Swal.fire({
+      html: isPalindrome
+        ? `<strong>${clearedText}</strong> es un palíndromo.<br><br><strong>${clearedText}</strong> is a palindrome.`
+        : `<strong>${clearedText}</strong> no es un palíndromo.<br><br><strong>${clearedText}</strong> is not a palindrome.`,
+      icon: isPalindrome ? 'success' : 'error',
+      confirmButtonText: 'OK',
+    }).then(() => {
+      clearText();
+    });
 
-    // Mostramos el resultado en la interfaz de usuario
-    document.getElementById('result').innerHTML = result
-      ? Swal.fire({
-          title: `${clearedText} es un palíndromo </br> </br> ${clearedText} is a palindrome`,
-          icon: 'success',
-          draggable: true,
-        })
-      : Swal.fire({
-          title: `${clearedText} no es un palíndromo </br> </br> ${clearedText} is not a palindrome `,
-          icon: 'error',
-          draggable: true,
-        });
-  }
+    console.log(`Texto limpiado: ${clearedText}`);
+    console.log(`¿Es palíndromo?: ${isPalindrome}`);
+  };
 
   return (
-    <>
-      <h1>
+    <main className='app'>
+      <h1 className='app-title'>
         Palíndromo <br /> Palindrome
       </h1>
 
-      <p>Ingrese un texto para verificar si es un palíndromo.</p>
-      <p>Enter a text to check if it is a palindrome.</p>
+      <section className='info-box'>
+        <p>
+          Un palíndromo es una palabra, número o frase que se lee igual de izquierda a derecha y de
+          derecha a izquierda.
+        </p>
+        <p>A palindrome is a word, number, or phrase that reads the same forward and backward.</p>
+      </section>
 
-      <div id='controls'>
-        <button id='clear-btn' onClick={clearText} className='btn btn-primary'>
+      <section className='instructions'>
+        <p>Ingrese un texto para verificar si es un palíndromo.</p>
+        <p>Enter a text to check if it is a palindrome.</p>
+      </section>
+
+      <input
+        id='text-input'
+        type='text'
+        value={text}
+        onChange={(event) => setText(event.target.value)}
+        placeholder='Ej: reconocer / racecar'
+        aria-label='Palindrome input'
+      />
+
+      <div className='controls'>
+        <button id='clear-btn' type='button' onClick={clearText} className='btn btn-primary'>
           Clear
         </button>
-      </div>
-      <input id='text-input' />
-      <div>
-        <button id='check-btn' onClick={onClick} className='btn btn-primary'>
+
+        <button id='check-btn' type='button' onClick={onClick} className='btn btn-primary'>
           Check
         </button>
       </div>
-      <div id='result'></div>
-    </>
+
+      <div id='result' aria-live='polite'></div>
+    </main>
   );
 };
 

@@ -1,0 +1,42 @@
+// src/styles/components/_Footer.scss
+
+.footer-fixed {
+  text-decoration: none;
+  z-index: 10;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.footer-fixed:visited{
+  color: white;
+}
+
+.redesSociales {
+  width: 1.5rem;
+  margin-right: 10px;
+}
+
+.kraken:link {
+  color: #00ffff;
+}
+
+.kraken:visited {
+  color: #00cccc;
+}
+
+.kraken:hover {
+  color: #00ffff;
+  opacity: 0.8;
+}
+
+.kraken:active {
+  color: #008888;
+}
