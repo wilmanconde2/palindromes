@@ -13,3 +13,5 @@
 
 ### Changed
 - **UI Enhancements**: Text and button styles were improved for better usability and visibility.
+
+**Full Changelog**: https://github.com/wilmanconde2/palindromes/commits/v1.0.0
